@@ -24,6 +24,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form";
 import { defaultValues, todoFormSchema, TodoFormValues } from "@/schema";
 import { createTodosAction } from "@/actions/todo.actions";
+import { Checkbox } from "@/components/ui/checkbox";
 const AddTodoForm =()=>{
       const form = useForm<TodoFormValues>({
     resolver: zodResolver(todoFormSchema),
@@ -33,7 +34,7 @@ const AddTodoForm =()=>{
   const onSubmit = (data:TodoFormValues)=>{
     console.log(data)
     // Here you would typically call an action to create a new todo
-    createTodosAction({title:data.title,body:data.body});
+    createTodosAction({title:data.title,body:data.body,complete:data.complete});
   }
 return (
           <Dialog>
@@ -89,6 +90,21 @@ return (
             </FormItem>
           )}
         />
+
+            <FormField
+          control={form.control}
+          name="complete"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Checkbox checked={field.value} onCheckedChange={field.onChange} {...field} />
+              </FormControl>
+               <FormLabel>Completed</FormLabel>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
                   <Button type="submit" className="cursor-pointer">Save changes</Button>
         </form>
         </Form>

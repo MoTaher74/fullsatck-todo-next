@@ -26,11 +26,12 @@ export const getTodosAction = async () => {
  * Ensure that the `prisma` client is properly initialized and that the `TodoFormValues` type
  * matches the expected input structure.
  */}
-export const createTodosAction = async ({ title, body }: TodoFormValues) => {
+export const createTodosAction = async ({ title, body,complete }: TodoFormValues) => {
     await prisma.todo.create({
         data:{
             title,
-            body
+            body,
+            completed: complete
         }
     });
 

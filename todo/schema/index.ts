@@ -12,10 +12,12 @@ export const todoFormSchema = z.object({
     body: z
     .string()
     .max(80, {
-      message: "Description must not be longer than 80 characters."}).optional()
+      message: "Description must not be longer than 80 characters."}).optional(),
+  complete: z.boolean()
 })
 export const defaultValues: Partial<TodoFormValues> = {
-  title:"DEFAULT TITLE",
-  body: "DEFAULT BODY",
+  title:"",
+  body: "",
+  complete:false
 }
 export type TodoFormValues = z.infer<typeof todoFormSchema>;
