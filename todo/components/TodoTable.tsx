@@ -26,8 +26,9 @@ export interface ITodo {
 const TodoTable =({todos}:{todos:ITodo[]})=>{
 
 return (
+
     <Table className="mt-10">
-      <TableCaption>A list of your recent invoices.</TableCaption>
+      <TableCaption>A list of your recent todos.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="">ID</TableHead>
@@ -38,7 +39,7 @@ return (
       </TableHeader>
       <TableBody>
         {todos.map((todo) => (
-          <TableRow key={todo.id}>
+          <TableRow key={todo.id} >
             <TableCell className="font-medium">{todo.id}</TableCell>
             <TableCell>{todo.title}</TableCell>
             <TableCell>{todo.completed ? <Badge className="bg-blue-400">Completed</Badge> :<Badge variant="secondary" className="bg-yellow-400">Uncompleted</Badge>}</TableCell>
@@ -56,6 +57,7 @@ return (
         </TableRow>
       </TableFooter>
     </Table>
+
 
 )
 }

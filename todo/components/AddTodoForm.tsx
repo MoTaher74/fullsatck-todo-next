@@ -22,7 +22,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form";
-import { defaultValues, todoFormSchema, TodoFormValues } from "@/schema";
+import {todoFormSchema, TodoFormValues } from "@/schema";
 import { createTodosAction } from "@/actions/todo.actions";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
