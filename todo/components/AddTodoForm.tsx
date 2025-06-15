@@ -4,7 +4,6 @@ import { Plus } from "lucide-react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -61,11 +60,7 @@ return (
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>
-              Make changes to your profile here. Click save when you&apos;re
-              done.
-            </DialogDescription>
+            <DialogTitle>Add New Todo</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4">
              <Form {...form}>
@@ -111,7 +106,7 @@ return (
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Checkbox checked={field.value} onCheckedChange={field.onChange} {...field} />
+                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
               </FormControl>
                <FormLabel>Completed</FormLabel>
               <FormMessage />
