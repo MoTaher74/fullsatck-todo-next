@@ -25,22 +25,36 @@ import { useForm } from "react-hook-form";
 import { defaultValues, todoFormSchema, TodoFormValues } from "@/schema";
 import { createTodosAction } from "@/actions/todo.actions";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from "react";
+import Spinner from "./Spinner";
 const AddTodoForm =()=>{
+
+    const [loading,setLoading] = useState(false);
+  const [open,setOpen]=useState(false);
+
+ const defaultValues: Partial<TodoFormValues> = {
+  title:"",
+  body: "",
+  complete:false
+}
       const form = useForm<TodoFormValues>({
     resolver: zodResolver(todoFormSchema),
     defaultValues,
     mode: "onChange",
   });
-  const onSubmit = (data:TodoFormValues)=>{
-    console.log(data)
+  const onSubmit =async (data:TodoFormValues)=>{
+    setLoading(true);
     // Here you would typically call an action to create a new todo
-    createTodosAction({title:data.title,body:data.body,complete:data.complete});
+    await createTodosAction({title:data.title,body:data.body,complete:data.complete});
+    setLoading(false);
+    setOpen(false)
   }
+
 return (
-          <Dialog>
-      <form>
+
+          <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-        <Button className="cursor-pointer ">
+        <Button className="cursor-pointer flex items-center justify-center m-auto ">
         <Plus size={14}/>
         New Todo
       </Button>
@@ -105,7 +119,7 @@ return (
           )}
         />
         
-                  <Button type="submit" className="cursor-pointer">Save changes</Button>
+                  <Button type="submit" className="cursor-pointer" disabled={loading}>{loading?(<><Spinner/>Saving</>):("save")}</Button>
         </form>
         </Form>
           </div>
@@ -116,7 +130,7 @@ return (
             <Button type="submit" className="cursor-pointer">Save changes</Button>
           </DialogFooter> */}
         </DialogContent>
-      </form>
+  
     </Dialog>
 
 )

@@ -1,12 +1,19 @@
 'use server';
 import { TodoFormValues } from "@/schema";
 import { PrismaClient } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 const prisma = new PrismaClient();
 
 // fetch all todos(data from DB)
 export const getTodosAction = async () => {
-    return await prisma.todo.findMany();
+    return await prisma.todo.findMany({
+
+        orderBy:{
+            createdAt:"desc"
+        }
+    });
+   
 };
 {/**
  * Creates a new todo item in the database using the provided title and body.
@@ -34,7 +41,26 @@ export const createTodosAction = async ({ title, body,complete }: TodoFormValues
             completed: complete
         }
     });
+        revalidatePath('/');
 
 };
-export const updateTodosAction = async () => {};
-export const deleteTodosAction = async () => {};
+export const updateTodosAction = async ({id,title,body,complete}:{id:string,title:string,body:string,complete:boolean}) => {
+    await prisma.todo.update({
+        where:{id},
+        data:{
+            title,
+            body,
+            completed: complete
+        }
+    });
+    revalidatePath('/');
+}
+  
+export const deleteTodosAction = async ({id}:{id:string}) => {
+    await prisma.todo.delete({
+        where:{
+            id
+        }
+    })
+    revalidatePath('/');
+};

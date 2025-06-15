@@ -1,4 +1,4 @@
-'use server';
+'use client'
 import {
   Table,
   TableBody,
@@ -10,12 +10,21 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "./ui/button";
-import { Pen, Trash } from "lucide-react";
-import { getTodosAction } from "@/actions/todo.actions";
+import { Trash } from "lucide-react";
+import { Badge } from '@/components/ui/badge';
+import { deleteTodosAction } from "@/actions/todo.actions";
+import EditTodoForm from "./EditTodoForm";
 
 
-const TodoTable =async ()=>{
-    const todos = await getTodosAction();
+export interface ITodo {
+    id: string;
+    title: string;
+    body: string | null;
+    completed: boolean;
+    createdAt: Date;}
+
+const TodoTable =({todos}:{todos:ITodo[]})=>{
+
 return (
     <Table className="mt-10">
       <TableCaption>A list of your recent invoices.</TableCaption>
@@ -32,10 +41,10 @@ return (
           <TableRow key={todo.id}>
             <TableCell className="font-medium">{todo.id}</TableCell>
             <TableCell>{todo.title}</TableCell>
-            <TableCell>false</TableCell>
+            <TableCell>{todo.completed ? <Badge className="bg-blue-400">Completed</Badge> :<Badge variant="secondary" className="bg-yellow-400">Uncompleted</Badge>}</TableCell>
             <TableCell className="space-x-2">
-                <Button className="cursor-pointer"><Pen size={16}/></Button>
-                <Button className="cursor-pointer" variant='destructive'><Trash size={16} /></Button>
+                <EditTodoForm todo={todo} />
+                <Button className="cursor-pointer" variant='destructive' onClick={async()=> await deleteTodosAction({id:todo.id})}><Trash size={16} /></Button>
             </TableCell>
           </TableRow>
         ))}
