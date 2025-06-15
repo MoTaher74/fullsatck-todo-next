@@ -23,6 +23,10 @@ export interface ITodo {
     completed: boolean;
     createdAt: Date;}
 
+    const increment = (num: number) => {
+  return num += 1;
+};
+
 const TodoTable =({todos}:{todos:ITodo[]})=>{
 
 return (
@@ -40,7 +44,7 @@ return (
       <TableBody>
         {todos.map((todo) => (
           <TableRow key={todo.id} >
-            <TableCell className="font-medium">{todo.id}</TableCell>
+            <TableCell className="font-medium">{increment(todos.indexOf(todo))}</TableCell>
             <TableCell>{todo.title}</TableCell>
             <TableCell>{todo.completed ? <Badge className="bg-blue-400">Completed</Badge> :<Badge variant="secondary" className="bg-yellow-400">Uncompleted</Badge>}</TableCell>
             <TableCell className="space-x-2">

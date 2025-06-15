@@ -6,9 +6,11 @@ import { revalidatePath } from "next/cache";
 const prisma = new PrismaClient();
 
 // fetch all todos(data from DB)
-export const getTodosAction = async () => {
+export const getUserTodosAction = async ({userId}:{userId:string|null}) => {
     return await prisma.todo.findMany({
-
+        where:{
+            user_id:userId as string 
+        },
         orderBy:{
             createdAt:"desc"
         }
@@ -33,12 +35,13 @@ export const getTodosAction = async () => {
  * Ensure that the `prisma` client is properly initialized and that the `TodoFormValues` type
  * matches the expected input structure.
  */}
-export const createTodosAction = async ({ title, body,complete }: TodoFormValues) => {
+export const createTodosAction = async ({ title, body,complete }: TodoFormValues,userId:string) => {
     await prisma.todo.create({
         data:{
             title,
             body,
-            completed: complete
+            completed: complete,
+            user_id:userId as string
         }
     });
         revalidatePath('/');

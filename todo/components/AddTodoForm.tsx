@@ -27,7 +27,7 @@ import { createTodosAction } from "@/actions/todo.actions";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import Spinner from "./Spinner";
-const AddTodoForm =()=>{
+const AddTodoForm =({userId}:{userId:string | null})=>{
 
     const [loading,setLoading] = useState(false);
   const [open,setOpen]=useState(false);
@@ -45,7 +45,7 @@ const AddTodoForm =()=>{
   const onSubmit =async (data:TodoFormValues)=>{
     setLoading(true);
     // Here you would typically call an action to create a new todo
-    await createTodosAction({title:data.title,body:data.body,complete:data.complete});
+    await createTodosAction({title:data.title,body:data.body,complete:data.complete},userId as string);
     setLoading(false);
     setOpen(false)
   }
