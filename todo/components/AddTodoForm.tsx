@@ -45,6 +45,11 @@ const AddTodoForm =({userId}:{userId:string | null})=>{
     setLoading(true);
     // Here you would typically call an action to create a new todo
     await createTodosAction({title:data.title,body:data.body,complete:data.complete},userId as string);
+  form.reset({
+    title: '',
+    body: '',
+    complete: false
+  });
     setLoading(false);
     setOpen(false)
   }
